@@ -50,6 +50,9 @@ done
 
 ### send function arguments explained
 
+	Flag				Meaning
+	-=-=				-=-=-=-
+
 	-b				binary transfer
 	-p				protect existing destination file (Z)
 	-T				turbo mode

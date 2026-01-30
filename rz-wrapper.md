@@ -6,6 +6,7 @@
 
 	Flag				Meaning
 	-=-=				-=-=-=-
+	
 	-b				binary transfer
 	-C				allow execution of remote commands (Z)
 	-E				rename any files already existing
