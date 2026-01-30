@@ -7,29 +7,19 @@ debug(){
     fi
 }
 
-getFile(){
-    FILE="$1"
-    if file "$FILE" | grep -q 'text'; then
-        MODE="-apT -t 10 -w 8192 -8"
-    else
-        MODE="-bpT -t 10 -w 8192 -8"
-    fi
-    /usr/bin/sz $MODE "$FILE" 2>>/tmp/sz-wrapper.err
-}
-
 for ITEM in "$@"; do
     debug "ITEM=[$ITEM]"
 
     # If it's a .lst file and readable → treat as a list
     if [[ -f "$ITEM" && "$ITEM" == *.lst ]]; then
-        while IFS= read -r FILE; do
-            debug "FILE=[$FILE]"
-            getFile "$FILE"
-        done < "$ITEM"
+        for FILE in $(cat $ITEM); do
+	   debug "FILE=[$FILE]"
+	   /usr/bin/sz -bpT -t 10 -w 8192 -8 $FILE 2>>/tmp/sz-wrapper.err
+	done
 
     # Otherwise → treat ITEM as a direct file
     else
         debug "FILE=[$ITEM]"
-        getFile "$ITEM"
+        /usr/bin/sz -bpT -t 10 -w 8192 -8 "$ITEM" 2>>/tmp/sz-wrapper.err
     fi
 done
